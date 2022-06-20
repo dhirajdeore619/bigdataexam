@@ -27,7 +27,6 @@ public class AllTimeHigh {
 	            stock_id.set(str[1]);
 	            High.set(high);
 	            
-	            //context.write(new Text(str[1]),new LongWritable(vol));
 	            context.write(stock_id, High);
 	         }
 	         catch(Exception e)
@@ -54,18 +53,14 @@ public class AllTimeHigh {
 				result.set(maxValue);
 
 		      context.write(key, result);
-		      //context.write(key, new LongWritable(sum));
 		      
 		    }
 	   }
 	  public static void main(String[] args) throws Exception {
 		    Configuration conf = new Configuration();
-		    //conf.set("name", "value")
-		    //conf.set("mapreduce.input.fileinputformat.split.minsize", "134217728");
-		    Job job = Job.getInstance(conf, "Highest Price for each stock");
+		    Job job = Job.getInstance(conf, "High");
 		    job.setJarByClass(AllTimeHigh.class);
 		    job.setMapperClass(MapClass.class);
-		    //job.setCombinerClass(ReduceClass.class);
 		    job.setReducerClass(ReduceClass.class);
 		    job.setNumReduceTasks(1);
 		    job.setOutputKeyClass(Text.class);
